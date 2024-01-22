@@ -15,6 +15,7 @@ const createConversation = async (req, res, next) => {
         updated_at: moment().utc().format('YYYY-MM-DD hh:mm:ss'),
     }
     const chat = await conversationRepository.createConversation(data)
+    req.eventEmitter.emit('message', data)
     return createResponse(res, true, null, chat)
 }
 

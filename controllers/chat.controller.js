@@ -41,8 +41,22 @@ const getChatOfMe = async (req, res, next) => {
     return createResponse(res, true, null, result)
 }
 
+const getChatDetail = async (req, res, next) => {
+    const user = req.user
+    const {chat_id} = req.params
+    const chat = await chatRepository.getChatDetail(chat_id)
+    const user_id = chat.member.find(item => item !== user.id)
+    const userInfo = await userRepository.getUserById(user_id)
+
+    return createResponse(res, true, null, {
+        ...chat,
+        name: userInfo.username
+    })
+}
+
 module.exports = {
     getChat,
     createChat,
-    getChatOfMe
+    getChatOfMe,
+    getChatDetail
 }

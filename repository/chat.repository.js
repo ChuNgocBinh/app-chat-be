@@ -11,7 +11,14 @@ const createChat = async (data) => {
     return result
 }
 
+const getChatDetail = async (id) => {
+    const result = await chatRepository.search()
+        .where('id').eq(id).return.first()
+    return result
+}
+
 module.exports = {
     getChat,
-    createChat
+    createChat,
+    getChatDetail
 }
